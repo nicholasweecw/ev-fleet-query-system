@@ -3,6 +3,7 @@ import sqlite3
 from datetime import datetime, timedelta
 import re
 import logging
+import os
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.WARNING)
@@ -257,4 +258,5 @@ def query():
     return jsonify({"response": response})
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
