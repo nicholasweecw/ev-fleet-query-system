@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EV Fleet Query System</title>
+  </head>
+  <body>
+    <h1>EV Fleet Query System</h1>
+    <form action="/query" method="post" id="query-form">
+      <label for="query">Enter your query:</label><br />
+      <input
+        type="text"
+        id="query"
+        name="query"
+        size="50"
+        required
+      /><br /><br />
+      <input type="submit" value="Submit" />
+    </form>
+    <div id="response"></div>
+
+    <script>
+      const form = document.getElementById("query-form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const query = document.getElementById("query").value;
+        const response = await fetch("/query", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ query }),
+        });
+        const data = await response.json();
+        document.getElementById("response").innerText = data.response;
+      });
+    </script>
+  </body>
+</html>
