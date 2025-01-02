@@ -1,11 +1,9 @@
 import sqlite3
 
 def setup_database():
-    # Connect to SQLite database (or create it if it doesn't exist)
     conn = sqlite3.connect("ev_fleet.db")
     cursor = conn.cursor()
 
-    # Create 'vehicles' table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS vehicles (
             ID TEXT PRIMARY KEY,
@@ -17,7 +15,6 @@ def setup_database():
         )
     ''')
 
-    # Create 'alerts' table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS alerts (
             vehicle_id TEXT,
@@ -28,7 +25,6 @@ def setup_database():
         )
     ''')
 
-    # Create 'maintenance_predictions' table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS maintenance_predictions (
             vehicle_id TEXT,
@@ -39,32 +35,30 @@ def setup_database():
         )
     ''')
 
-    # Insert sample data into 'vehicles'
     vehicles_data = [
-        ("EV001", "Model A", 10.0, "Poor", 35000, "2024-05-01"),  # Low charge
-        ("EV002", "Model B", 15.0, "Fair", 22000, "2024-03-10"),  # Low charge
-        ("EV003", "Model C", 20.0, "Good", 18000, "2024-02-20"),  # Medium charge
-        ("EV004", "Model D", 25.0, "Good", 25000, "2024-04-15"),  # Medium charge
-        ("EV005", "Model E", 18.0, "Poor", 30000, "2024-01-05"),  # Low charge
-        ("EV006", "Model F", 12.0, "Fair", 40000, "2024-06-01"),  # Low charge
-        ("EV007", "Model G", 8.0, "Poor", 45000, "2024-05-20"),   # Low charge
-        ("EV008", "Model H", 22.0, "Good", 15000, "2024-03-25"),  # Medium charge
-        ("EV009", "Model I", 30.0, "Fair", 12000, "2024-02-01"),  # Medium charge
-        ("EV010", "Model J", 28.0, "Excellent", 5000, "2024-03-15"),  # Medium charge
-        ("EV011", "Model K", 85.0, "Good", 6000, "2024-02-25"),   # High charge
-        ("EV012", "Model L", 95.0, "Excellent", 2000, "2024-01-30"),  # High charge
-        ("EV013", "Model M", 82.0, "Fair", 8000, "2024-04-10"),   # High charge
-        ("EV014", "Model N", 50.0, "Good", 12000, "2024-03-20"),  # Medium charge
-        ("EV015", "Model O", 75.0, "Excellent", 10000, "2024-02-10"),  # Medium charge
-        ("EV016", "Model P", 5.0, "Poor", 47000, "2024-06-05"),   # Very low charge
-        ("EV017", "Model Q", 40.0, "Good", 20000, "2024-03-18"),  # Medium charge
-        ("EV018", "Model R", 90.0, "Excellent", 3000, "2024-01-05"),  # High charge
-        ("EV019", "Model S", 78.0, "Fair", 11000, "2024-02-28"),  # Medium charge
-        ("EV020", "Model T", 15.0, "Poor", 35000, "2024-04-01")   # Low charge
+        ("EV001", "Model A", 10.0, "Poor", 35000, "2024-05-01"),  
+        ("EV002", "Model B", 15.0, "Fair", 22000, "2024-03-10"),  
+        ("EV003", "Model C", 20.0, "Good", 18000, "2024-02-20"),  
+        ("EV004", "Model D", 25.0, "Good", 25000, "2024-04-15"),  
+        ("EV005", "Model E", 18.0, "Poor", 30000, "2024-01-05"),  
+        ("EV006", "Model F", 12.0, "Fair", 40000, "2024-06-01"),  
+        ("EV007", "Model G", 8.0, "Poor", 45000, "2024-05-20"),   
+        ("EV008", "Model H", 22.0, "Good", 15000, "2024-03-25"), 
+        ("EV009", "Model I", 30.0, "Fair", 12000, "2024-02-01"),  
+        ("EV010", "Model J", 28.0, "Excellent", 5000, "2024-03-15"),  
+        ("EV011", "Model K", 85.0, "Good", 6000, "2024-02-25"),   
+        ("EV012", "Model L", 95.0, "Excellent", 2000, "2024-01-30"),  
+        ("EV013", "Model M", 82.0, "Fair", 8000, "2024-04-10"),   
+        ("EV014", "Model N", 50.0, "Good", 12000, "2024-03-20"),  
+        ("EV015", "Model O", 75.0, "Excellent", 10000, "2024-02-10"),  
+        ("EV016", "Model P", 5.0, "Poor", 47000, "2024-06-05"),   
+        ("EV017", "Model Q", 40.0, "Good", 20000, "2024-03-18"),  
+        ("EV018", "Model R", 90.0, "Excellent", 3000, "2024-01-05"),  
+        ("EV019", "Model S", 78.0, "Fair", 11000, "2024-02-28"),  
+        ("EV020", "Model T", 15.0, "Poor", 35000, "2024-04-01")   
     ]
     cursor.executemany('INSERT OR IGNORE INTO vehicles VALUES (?, ?, ?, ?, ?, ?)', vehicles_data)
 
-    # Insert sample data into 'alerts'
     alerts_data = [
         ("EV001", "Brake Failure", "2024-12-25", "High"),
         ("EV002", "Engine Warning", "2024-12-18", "Medium"),
@@ -99,7 +93,6 @@ def setup_database():
     ]
     cursor.executemany('INSERT OR IGNORE INTO alerts VALUES (?, ?, ?, ?)', alerts_data)
 
-    # Insert sample data into 'maintenance_predictions'
     maintenance_data = [
         ("EV001", "Brake Replacement", "2024-12-29", 0.75),
         ("EV002", "Engine Overhaul", "2024-12-27", 0.80),
@@ -114,11 +107,9 @@ def setup_database():
     ]
     cursor.executemany('INSERT OR IGNORE INTO maintenance_predictions VALUES (?, ?, ?, ?)', maintenance_data)
 
-    # Commit changes and close connection
     conn.commit()
     conn.close()
 
     print("Database setup complete and sample data inserted.")
 
-# Run the setup function
 setup_database()
